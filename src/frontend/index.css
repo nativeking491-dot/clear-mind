@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ─────────────────────────────────────────────── */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design Tokens (Light Mode — Calm Wellness) ────────── */
+@layer base {
+  :root {
+    --radius: 0.875rem;
+
+    /* Warm cream parchment background */
+    --background: 0.97 0.012 85;
+    --foreground: 0.22 0.035 220;
+
+    /* Cards: soft warm white */
+    --card: 0.99 0.006 80;
+    --card-foreground: 0.22 0.035 220;
+
+    --popover: 0.99 0.006 80;
+    --popover-foreground: 0.22 0.035 220;
+
+    /* Primary: deep forest teal */
+    --primary: 0.42 0.1 190;
+    --primary-foreground: 0.98 0.005 80;
+
+    /* Secondary: sage mist */
+    --secondary: 0.92 0.03 160;
+    --secondary-foreground: 0.3 0.06 170;
+
+    /* Muted: pale sage */
+    --muted: 0.94 0.02 160;
+    --muted-foreground: 0.55 0.04 190;
+
+    /* Accent: warm amber glow */
+    --accent: 0.88 0.08 75;
+    --accent-foreground: 0.25 0.05 60;
+
+    /* Destructive: muted coral */
+    --destructive: 0.58 0.18 25;
+    --destructive-foreground: 0.98 0.005 80;
+
+    /* Success: emerald */
+    --success: 0.52 0.13 155;
+    --success-foreground: 0.98 0.005 80;
+
+    /* Warning: warm amber */
+    --warning: 0.75 0.15 75;
+    --warning-foreground: 0.22 0.04 65;
+
+    --border: 0.88 0.025 170;
+    --input: 0.88 0.025 170;
+    --ring: 0.42 0.1 190;
+
+    /* Charts */
+    --chart-1: 0.52 0.13 155;
+    --chart-2: 0.48 0.12 210;
+    --chart-3: 0.75 0.15 75;
+    --chart-4: 0.62 0.1 270;
+    --chart-5: 0.58 0.18 25;
+
+    /* Sidebar */
+    --sidebar: 0.95 0.02 170;
+    --sidebar-foreground: 0.22 0.035 220;
+    --sidebar-primary: 0.42 0.1 190;
+    --sidebar-primary-foreground: 0.98 0.005 80;
+    --sidebar-accent: 0.88 0.08 75;
+    --sidebar-accent-foreground: 0.25 0.05 60;
+    --sidebar-border: 0.88 0.025 170;
+    --sidebar-ring: 0.42 0.1 190;
+
+    /* App-specific tokens */
+    --streak-glow: oklch(0.52 0.14 155 / 0.25);
+    --nav-height: 4.5rem;
+    --header-height: 3.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    min-height: 100dvh;
+  }
+
+  /* Smooth scrolling within containers */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ─── Utilities ──────────────────────────────────────────── */
+@layer utilities {
+  .font-display {
+    font-family: "Fraunces", serif;
+  }
+
+  .font-body {
+    font-family: "Figtree", sans-serif;
+  }
+
+  /* Streak ring glow animation */
+  @keyframes streak-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--streak-glow); }
+    50% { box-shadow: 0 0 0 16px var(--streak-glow); }
+  }
+
+  .streak-ring {
+    animation: streak-pulse 3s ease-in-out infinite;
+  }
+
+  /* Gentle float animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .float-gentle {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* Entry fade-up */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fade-up 0.5s ease-out forwards;
+  }
+
+  /* Stagger children */
+  .stagger > *:nth-child(1) { animation-delay: 0.05s; opacity: 0; }
+  .stagger > *:nth-child(2) { animation-delay: 0.1s; opacity: 0; }
+  .stagger > *:nth-child(3) { animation-delay: 0.15s; opacity: 0; }
+  .stagger > *:nth-child(4) { animation-delay: 0.2s; opacity: 0; }
+  .stagger > *:nth-child(5) { animation-delay: 0.25s; opacity: 0; }
+  .stagger > * { animation: fade-up 0.45s ease-out forwards; }
+
+  /* Safe area */
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
+  }
+}
